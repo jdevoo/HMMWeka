@@ -1,21 +1,15 @@
-/**
- * 
- */
 package weka.estimators;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import weka.core.matrix.DoubleVector;
 import weka.core.matrix.Matrix;
 
 /**
- * @author marco
+ * @author marco gillies
  *
  */
 public class TestMultivariateNormalEstimator {
-
 	/**
 	 * Test method for {@link weka.estimators.MultivariateNormalEstimator#setCovarianceType(weka.estimators.MultivariateNormalEstimator.CovarianceType)}.
 	 * @throws Exception 
@@ -28,34 +22,34 @@ public class TestMultivariateNormalEstimator {
 		mne.setCovarianceType(MultivariateNormalEstimator.COVARIANCE_DIAGONAL);
 		assertEquals(mne.getCovarianceType(), MultivariateNormalEstimator.COVARIANCE_DIAGONAL);
 		
-		for(int i = 0; i < 50.0; i++)
+		for (int i = 0; i < 50.0; i++)
 		{
 			DoubleVector v = DoubleVector.random(6);
 			mne.addValue(v, 1.0);
 		}
 		mne.calculateParameters();
 		Matrix cov = mne.getVariance();
-		for(int i = 0; i < 6; i ++)
+		for (int i = 0; i < 6; i ++)
 			for (int j = 0; j < 6; j++)
 			{
-				if(i!=j)
+				if (i!=j)
 					assertEquals(cov.get(i,j), 0.0, 0.0001);
 			}
 		
 		mne.setCovarianceType(MultivariateNormalEstimator.COVARIANCE_SPHERICAL);
 		assertEquals(mne.getCovarianceType(), MultivariateNormalEstimator.COVARIANCE_SPHERICAL);
 		
-		for(int i = 0; i < 50.0; i++)
+		for (int i = 0; i < 50.0; i++)
 		{
 			DoubleVector v = DoubleVector.random(6);
 			mne.addValue(v, 1.0);
 		}
 		mne.calculateParameters();
 		cov = mne.getVariance();
-		for(int i = 0; i < 6; i ++)
+		for (int i = 0; i < 6; i ++)
 			for (int j = 0; j < 6; j++)
 			{
-				if(i!=j)
+				if (i!=j)
 					assertEquals(cov.get(i,j), 0.0, 0.0001);
 				else
 					assertEquals(cov.get(i,j), cov.get(0,0), 0.0001);
@@ -159,7 +153,7 @@ public class TestMultivariateNormalEstimator {
 		MultivariateNormalEstimator mne = new MultivariateNormalEstimator();
 		
 		DoubleVector avg = new DoubleVector(6,0.0);
-		for(int i = 0; i < 50.0; i++)
+		for (int i = 0; i < 50.0; i++)
 		{
 			DoubleVector v = DoubleVector.random(6);
 			mne.addValue(v, 1.0);
@@ -225,7 +219,7 @@ public class TestMultivariateNormalEstimator {
 		mne1.setVariance(cov);
 		
 		MultivariateNormalEstimator mne2 = new MultivariateNormalEstimator();
-		for(int i = 0; i < 2000; i ++)
+		for (int i = 0; i < 2000; i ++)
 		{
 			DoubleVector v = mne1.sample();
 			mne2.addValue(v, 1.0);

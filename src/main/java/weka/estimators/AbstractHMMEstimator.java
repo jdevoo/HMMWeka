@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 public class AbstractHMMEstimator implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4206735703010212439L;
-	
 	
 	protected Estimator m_state0Estimator;
 	protected Estimator m_stateEstimators[];
@@ -24,7 +20,6 @@ public class AbstractHMMEstimator implements Serializable {
 		
 		m_Laplace = laplace;
 		setNumStates(numStates);
-		
 	}
 	
 	public AbstractHMMEstimator(AbstractHMMEstimator a) throws Exception
@@ -33,14 +28,9 @@ public class AbstractHMMEstimator implements Serializable {
 		
 		m_state0Estimator = Estimator.makeCopy(a.m_state0Estimator);
 		
-		//m_state0Estimator = new DiscreteEstimator(a.getNumStates(), a.m_Laplace);
-		//m_stateEstimators = new DDConditionalEstimator(numStates, numStates, laplace);
-		//m_outputEstimators = new DDConditionalEstimator(numOutputs, numStates, laplace);
-		//m_stateEstimators = new Estimator[a.getNumStates()];
 		for (int s = 0; s < a.getNumStates(); s++)
 		{
 			m_stateEstimators[s] = Estimator.makeCopy(a.m_stateEstimators[s]);
-			//m_stateEstimators[s] = new DiscreteEstimator(a.getNumStates(), a.m_Laplace);
 		}
 	}
 
@@ -83,11 +73,4 @@ public class AbstractHMMEstimator implements Serializable {
 	    
 	    return s;
 	}
-
-	
-	//public void setOutputDimension(int OutputDimension) throws Exception {
-	//	// TODO Auto-generated method stub
-	//	throw new Exception("Cannot set the dimensionality of a univariate HMM Estimator (always dim 1)");
-	//}
-
 }

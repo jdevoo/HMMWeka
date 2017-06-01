@@ -1,15 +1,10 @@
-/**
- * 
- */
 package weka.estimators;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 /**
- * @author marco
- *
+ * @author marco gillies
  */
 public class TestMultivariateNormalHMMEstimator {
 

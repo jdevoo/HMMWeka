@@ -10,11 +10,8 @@ import weka.core.matrix.DoubleVector;
 import weka.core.matrix.Matrix;
 
 public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
-		implements HMMEstimator, Serializable {
+	implements HMMEstimator, Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1123497102759147327L;
 	protected boolean m_Tied = true;
 
@@ -34,7 +31,7 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 
 	public void setCovarianceType(int covarianceType) {
 		this.m_CovarianceType = covarianceType;
-		if(m_outputEstimators != null)
+		if (m_outputEstimators != null)
 		{
 			for (int s = 0; s < getNumStates(); s++)
 			{
@@ -50,7 +47,6 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 	}
 
 	protected MultivariateNormalEstimator m_outputEstimators[];
-
 
 	public MultivariateNormalHMMEstimator() {
 		super();
@@ -206,7 +202,7 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 	@Override
 	public void addValue(double prevState, double state, double output,
 			double weight) throws Exception {
-		if(getOutputDimension() == 1)
+		if (getOutputDimension() == 1)
 		{
 			DoubleVector outputs = new DoubleVector(1, output);
 			addValue(prevState, state, outputs, weight);
@@ -218,7 +214,7 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 
 	@Override
 	public void addValue0(double state, double output, double weight) throws Exception {
-		if(getOutputDimension() == 1)
+		if (getOutputDimension() == 1)
 		{
 			DoubleVector outputs = new DoubleVector(1, output);
 			addValue0(state, outputs, weight);
@@ -230,7 +226,7 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 
 	@Override
 	public double getProbability(double prevState, double state, double output) throws Exception {
-		if(getOutputDimension() == 1)
+		if (getOutputDimension() == 1)
 		{
 			DoubleVector outputs = new DoubleVector(1, output);
 			return getProbability(prevState, state, outputs);
@@ -242,7 +238,7 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 
 	@Override
 	public double getProbability0(double state, double output) throws Exception {
-		if(getOutputDimension() == 1)
+		if (getOutputDimension() == 1)
 		{
 			DoubleVector outputs = new DoubleVector(1, output);
 			return getProbability0(state, outputs);
@@ -268,7 +264,7 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 
 	@Override
 	public void calculateParameters() throws Exception {
-		if(isTied())
+		if (isTied())
 			MultivariateNormalEstimator.calculateTiedParameters(m_outputEstimators);
 		else
 			for (int i = 0; i < m_outputEstimators.length; i++)

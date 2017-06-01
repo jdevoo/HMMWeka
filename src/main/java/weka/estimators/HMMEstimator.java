@@ -1,6 +1,3 @@
-/**
- * 
- */
 package weka.estimators;
 
 import java.util.Random;
@@ -8,11 +5,9 @@ import java.util.Random;
 import weka.core.Instances;
 import weka.core.RevisionHandler;
 import weka.core.matrix.DoubleVector;
-//import weka.estimators.Estimator;
 
 /**
  * @author marco gillies
- *
  */
 public interface HMMEstimator extends RevisionHandler {
 
@@ -26,7 +21,6 @@ public interface HMMEstimator extends RevisionHandler {
 
 	public int getOutputDimension();
 	
-	//public void setOutputDimension(int OutputDimension) throws Exception;	
 	/**
 	   * Add a new time step value to the current estimator.
 	   *
@@ -65,17 +59,15 @@ public interface HMMEstimator extends RevisionHandler {
 	   */
 	  void addValue0(double state, double output, double weight) throws Exception;
 
-
 	  /**
 	   * Get a probability for a time step value
 	   *
 	   * @param prev_state the previous HMM state 
 	   * @param state the current HMM state
 	   * @param output the HMM output  
-	 * @throws Exception 
+	   * @throws Exception 
 	   */
 	  double getProbability(double prev_state, double state, DoubleVector output) throws Exception;
-
 
 	  /**
 	   * Convenience function for univariate outputs.
@@ -86,16 +78,14 @@ public interface HMMEstimator extends RevisionHandler {
 	   */
 	  double getProbability(double prev_state, double state, double output) throws Exception;
 
-
 	  /**
 	   * Get a probability for a first time step value
 	   *
 	   * @param state the current HMM state
 	   * @param output the HMM output  
-	 * @throws Exception 
+	   * @throws Exception 
 	   */
 	  double getProbability0(double state, DoubleVector output) throws Exception;
-
 
 	  /**
 	   * Convenience function for univariate outputs.

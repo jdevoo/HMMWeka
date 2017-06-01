@@ -158,7 +158,7 @@
     <junit printsummary="yes" haltonfailure="yes">
       <classpath>
         <fileset dir="${lib}">
-    <include name="*.jar"/>
+          <include name="*.jar"/>
           <include name="*.zip"/>
         </fileset>
         <pathelement location="${build}/classes"/>
@@ -228,10 +228,14 @@
       </fileset>
     </copy>
     <mkdir dir="${dist}/${package}/src"/>
-
     <copy todir="${dist}" >
       <fileset dir="${web}">
         <include name="**/*"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist}/${package}" >
+	    <fileset dir="${basedir}">
+        <include name="**/*.arff"/>
       </fileset>
     </copy>
     
@@ -255,7 +259,7 @@
           replace="${project.version}"
           flags="g" />
     
-  <replaceregexp file="${dist}/index.html"
+    <replaceregexp file="${dist}/index.html"
           match="##author.url##"
           replace="${author.url}"
           flags="g" />
@@ -306,25 +310,25 @@
            flags="g" />
     
     <copy todir="${dist}/${package}" >
-       <fileset dir=".">
-         <include name="*.xml"/>
-         <include name="src/**/*.excludes"/>
-         <include name="src/**/*.gif"/>
-         <include name="src/**/*.java"/>
-         <include name="src/**/*.jpeg"/>
-         <include name="src/**/*.jpg"/>
-         <include name="src/**/*.props"/>
-         <include name="src/**/*.txt"/>
-         <include name="src/**/*.xml"/>
-         <include name="src/**/*.cup"/>
-         <include name="src/**/*.flex"/>
-         <include name="src/**/*.jflex"/>
-         <include name="src/**/*.properties"/>
-         <include name="src/**/*.default"/>
-         <include name="src/**/*.cost"/>
-         <include name="src/**/*.arff"/>
-         <include name="src/**/*.matrix"/>
-       </fileset>
+      <fileset dir=".">
+        <include name="*.xml"/>
+        <include name="src/**/*.excludes"/>
+        <include name="src/**/*.gif"/>
+        <include name="src/**/*.java"/>
+        <include name="src/**/*.jpeg"/>
+        <include name="src/**/*.jpg"/>
+        <include name="src/**/*.props"/>
+        <include name="src/**/*.txt"/>
+        <include name="src/**/*.xml"/>
+        <include name="src/**/*.cup"/>
+        <include name="src/**/*.flex"/>
+        <include name="src/**/*.jflex"/>
+        <include name="src/**/*.properties"/>
+        <include name="src/**/*.default"/>
+        <include name="src/**/*.cost"/>
+        <include name="src/**/*.arff"/>
+        <include name="src/**/*.matrix"/>
+      </fileset>
     </copy>
     <zip destfile="${dist}/${package}.zip" 
       basedir="${dist}/${package}">

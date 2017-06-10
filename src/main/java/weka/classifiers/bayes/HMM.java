@@ -35,7 +35,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	}
 	
 	/** The number of classes */
-	protected int m_NumStates=6;
+	protected int m_NumStates = 6;
 	protected int m_NumOutputs;
 	protected int m_OutputDimension = 1;
 	protected boolean m_Numeric = false;
@@ -380,14 +380,14 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	protected double forward(HMMEstimator hmm, Instances sequence) throws Exception
 	{
 		double alpha[][] = new double[sequence.numInstances()][m_NumStates];
-		double scales [] =  forward(hmm, sequence, alpha);
+		double scales[] =  forward(hmm, sequence, alpha);
 		return likelihoodFromScales(scales);
 	}
 	
 	protected double [] forwardBackward(HMMEstimator hmm, Instances sequence, double alpha[][], double beta[][]) throws Exception
 	{
 		// do the forward pass
-		double scales [] =  forward(hmm, sequence, alpha);
+		double scales[] =  forward(hmm, sequence, alpha);
 		
 		// final time step
 		for (int s = 0; s < getNumStates(); s++)
@@ -487,47 +487,46 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	 * @return an array of probabilities (doubles). The nth value is the probability that the sequence is of the nth class.
 	 */
 	public double[] distributionForInstance(weka.core.Instance instance) throws Exception {
-		
 		if (estimators == null)
 		{
 			double result[] = {0.5,0.5};
 			return result;
 		}
 		
-		 double [] result = new double[estimators.length];
-		 double sum = 0.0;
+		double [] result = new double[estimators.length];
+		double sum = 0.0;
 		 
-		 // means we haven't trained so the results would be garbage
-		 if (m_SeqAttr < 0)
-		 {
-			 for (int j = 0; j < estimators.length; j++)
-			 {
-				 result[j] = 1.0;
-				 sum += result[j];
-			 };
-		 }
-		 else
-		 {
-			 Instances seq = instance.relationalValue(m_SeqAttr);
-			 for (int j = 0; j < estimators.length; j++)
-			 {
+		// means we haven't trained so the results would be garbage
+		if (m_SeqAttr < 0)
+		{
+			for (int j = 0; j < estimators.length; j++)
+			{
+				result[j] = 1.0;
+				sum += result[j];
+			};
+		}
+		else
+		{
+			Instances seq = instance.relationalValue(m_SeqAttr);
+			for (int j = 0; j < estimators.length; j++)
+			{
 				try
 				{
 					result[j] = Math.exp(forward(estimators[j], seq));
 				}
-				catch(ProbabilityTooSmallException e)
+				catch (ProbabilityTooSmallException e)
 				{
 					result[j] = 0;
 				}
-				 sum += result[j];
-			 };
-		 }
+				sum += result[j];
+			};
+		}
 		 
-		 if (Math.abs(sum) > 0.0000001)
-		 {
-			 for (int i = 0; i < estimators.length; i++)
-				 result[i] /= sum;
-		 }
+		if (Math.abs(sum) > 0.0000001)
+		{
+			for (int i = 0; i < estimators.length; i++)
+				result[i] /= sum;
+		}
 		return result;
 	}
 
@@ -690,7 +689,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 		
 		// set up new estimators that will store the new
 		// distributions for this step
-		HMMEstimator newEstimators[] = new HMMEstimator[data.numClasses()];;
+		HMMEstimator newEstimators[] = new HMMEstimator[data.numClasses()];
 		for (int i = 0; i < data.numClasses(); i++)
 		{
 			if (isNumeric())
@@ -701,11 +700,9 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			}
 			else
 			{
-				newEstimators[i]=new DiscreteHMMEstimator(getNumStates(), getNumOutputs(), false);
+				newEstimators[i] = new DiscreteHMMEstimator(getNumStates(), getNumOutputs(), false);
 			}
 		}
-		
-		
 		
 		int numS0 = 0;
 		int numS1 = 0;
@@ -732,7 +729,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			{
 				scales = forwardBackward(hmm, sequence, alpha, beta);
 			}
-			catch(ProbabilityTooSmallException e)
+			catch (ProbabilityTooSmallException e)
 			{
 				continue;
 			}
@@ -749,7 +746,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			double gamma[][] = new double[getNumStates()][getNumStates()];
 			for (int s = 0; s < getNumStates(); s++)
 			{
-				gamma[0][s] = alpha[0][s]*beta[0][s];//*scales[0];
+				gamma[0][s] = alpha[0][s]*beta[0][s];
 				sumGamma += gamma[0][s];
 				
 			}
@@ -761,7 +758,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 				if (Double.isInfinite(gamma[0][s]) || Double.isNaN(gamma[0][s]))
 					throw new Exception("Output of the forward backward algorithm gives a NaN");
 			}
-			
+		
 			for (int t = 1; t < sequence.numInstances(); t++)
 			{
 				sumGamma = 0.0;
@@ -796,11 +793,11 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 							throw new Exception("Output of the forward backward algorithm gives a NaN");
 						
 					}
-				}
+			}
 			hasUpdated = true;
 		}
-		//System.out.println("S0 " + numS0 + " S1 " + numS1);
-		//System.out.println(newEstimators[0]);
+		System.out.println("S0 " + numS0 + " S1 " + numS1);
+		System.out.println(newEstimators[0]);
 		// update the estimators
 		if (hasUpdated)
 		{
@@ -981,9 +978,6 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 					m_SeqAttr = attr.index();
 					assert(m_SeqAttr == i);
 					this.setNumeric(true);
-					//m_NumOutputs  = -1;
-					//m_OutputDimension = attr.relation().numAttributes();
-					//break;
 				}
 				break;
 			}
@@ -1033,7 +1027,6 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	
 	protected void initGaussianOutputProbsCluster(int numClasses, Instances data, DoubleVector outputMeans[][], Matrix outputVars[][]) throws Exception
 	{
-		
 		m_SeqAttr = -1;
 		m_NumOutputs = 0;
 		for (int i = 0; i < data.numAttributes(); i++)
@@ -1109,7 +1102,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 						mean.set(a, clusterCentroids.instance(j).value(a));
 					
 					System.out.println("Mean " + j + " " + mean);
-					est.setOutputMean(j,mean);
+					est.setOutputMean(j, mean);
 				}
 				else
 				{
@@ -1124,7 +1117,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 						double s = clusterStdDevs.instance(j).value(a);
 						sigma.set(a, a, s*s);
 					}
-					est.setOutputVariance(j,sigma);
+					est.setOutputVariance(j, sigma);
 				}
 				else
 				{
@@ -1191,7 +1184,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			else if (isRandomStateInitializers())
 				state0Probs = initState0ProbsRandom(numClasses, rand);
 			else
-				state0Probs = initState0ProbsUniform(numClasses);//initState0ProbsRandom(numClasses, rand);
+				state0Probs = initState0ProbsUniform(numClasses);
 		}
 
 		if (stateProbs == null)
@@ -1206,7 +1199,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 		
 		for (int i = 0; i < numClasses; i++)
 		{
-			MultivariateNormalHMMEstimator est =new MultivariateNormalHMMEstimator(getNumStates(), false);
+			MultivariateNormalHMMEstimator est = new MultivariateNormalHMMEstimator(getNumStates(), false);
 			estimators[i] = est;
 			est.setCovarianceType(m_CovarianceType);
 			est.setTied(isTied());
@@ -1249,7 +1242,6 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 		}
 		//System.out.println(data);
 
-		
 		// find the sequence attribute and then use it to 
 		// find the number of outputs
 		m_SeqAttr = -1;
@@ -1263,14 +1255,14 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 				{
 					m_SeqAttr = attr.index();
 					assert(m_SeqAttr == i);
-					m_NumOutputs  = attr.relation().numDistinctValues(0);
+					m_NumOutputs = attr.relation().attribute(0).numValues();
 				}
 				if (attr.relation().attribute(0).isNumeric())
 				{
 					m_SeqAttr = attr.index();
 					assert(m_SeqAttr == i);
 					this.setNumeric(true);
-					m_NumOutputs  = -1;
+					m_NumOutputs = -1;
 					m_OutputDimension = attr.relation().numAttributes();
 					break;
 				}

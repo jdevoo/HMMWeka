@@ -40,7 +40,7 @@ URL=http://www.doc.gold.ac.uk/~mas02mg/software/hmmweka/index.html
 #Related=packageName1,packageName2,...
 
 # Dependencies (format: packageName (equality/inequality version_number)
-Depends=weka (>=3.7.1)
+Depends=weka (>=3.8.1)
 
 # Message to display in installation. Can be used to provide
 # special instructions (e.g. manual stuff needed to complete

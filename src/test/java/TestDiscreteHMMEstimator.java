@@ -37,7 +37,6 @@ public class TestDiscreteHMMEstimator {
 		
 		dhe.setNumOutputs(345);
 		assertEquals(dhe.getNumOutputs(), 345);
-		
 	}
 
 	/**
@@ -78,7 +77,6 @@ public class TestDiscreteHMMEstimator {
 			for (int j = 0; j < 4; j++)
 				for (int k = 0; k < 4; k++)
 					assertEquals(dhe1.getProbability(i, j, k),dhe2.getProbability(i,j , k), 0.01) ;
-		
 	}
 
 	/**
@@ -134,7 +132,6 @@ public class TestDiscreteHMMEstimator {
 		for (int i = 0; i < 4; i ++)
 			for (int k = 0; k < 4; k++)
 			{
-				//Double w = m_rand.nextDouble();
 				dhe1.addValue0(i, k, m_rand.nextDouble());
 			}
 		for (int i = 0; i < 4; i ++)
@@ -165,7 +162,6 @@ public class TestDiscreteHMMEstimator {
 	 */
 	@Test
 	public void testAddValueDoubleDoubleDoubleDouble() {
-
 		for (int testRun = 0; testRun < 10; testRun++)
 		{
 			DiscreteHMMEstimator dhe1 = new DiscreteHMMEstimator(m_rand.nextInt(20), m_rand.nextInt(20), false);
@@ -192,8 +188,6 @@ public class TestDiscreteHMMEstimator {
 					}
 				}
 			}
-			
-			
 			
 			for (int s = 0; s < dhe1.getNumStates(); s ++)
 			{
@@ -238,7 +232,7 @@ public class TestDiscreteHMMEstimator {
 				assertEquals(dhe1.getProbability0(s, o), weights[s][o], 0.01);
 			}
 
-		dhe1 = new DiscreteHMMEstimator(m_rand.nextInt(20),m_rand.nextInt(20), false);
+		dhe1 = new DiscreteHMMEstimator(m_rand.nextInt(20), m_rand.nextInt(20), false);
 		weights = new double[dhe1.getNumStates()][dhe1.getNumOutputs()];
 		sum = 0;
 		for (int s = 0; s < dhe1.getNumStates(); s ++)
@@ -310,7 +304,6 @@ public class TestDiscreteHMMEstimator {
 	 */
 	@Test
 	public void testSetNumStates() {
-
 		DiscreteHMMEstimator dhe = new DiscreteHMMEstimator(4, 4, false);
 		assertEquals(dhe.getNumStates(), 4);
 		
@@ -335,5 +328,4 @@ public class TestDiscreteHMMEstimator {
 		DiscreteHMMEstimator dhe = new DiscreteHMMEstimator(4, 4, false);
 		assertEquals(dhe.getOutputDimension(), 1);
 	}
-
 }

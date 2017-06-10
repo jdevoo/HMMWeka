@@ -162,7 +162,7 @@ public class TestHMMClassifiers {
 		for (int c=0; c < 2; c++)
 			for (int s=0; s < 6; s++)
 				for (int o=0; o < 6; o++)
-					outputProbs[c][s][0]=0.0;
+					outputProbs[c][s][o]=0.0;
 		outputProbs[0][0][0] = 1.0;
 		outputProbs[0][1][1] = 1.0;
 		outputProbs[0][2][2] = 1.0;
@@ -217,7 +217,7 @@ public class TestHMMClassifiers {
 			}
 		}
 
-		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, outputMeans, outputVars, null);	
+		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, outputMeans, outputVars, null);
 
 		return hmm.sample(numseqs, length);
 	}
@@ -254,14 +254,13 @@ public class TestHMMClassifiers {
 			for (int s=0; s < 2; s++)
 			{
 				outputMeans[c][s] = new DoubleVector(4, 10.0*(double)s);
-				outputVars[c][s] = Matrix.identity(4,4);
+				outputVars[c][s] = Matrix.identity(4, 4);
 			}
 		}
-
+		
 		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, outputMeans, outputVars, null);	
-
+		
 		return hmm.sample(numseqs, length);
-
 	}
 	
 	protected Instances getMVSequence3(int numseqs, int length) throws Exception
@@ -319,7 +318,6 @@ public class TestHMMClassifiers {
 		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, outputMeans, outputVars, null);	
 
 		return hmm.sample(numseqs, length);
-		
 	}
 	
 	@Test
@@ -327,7 +325,6 @@ public class TestHMMClassifiers {
 	{
 		Instances train = getSequence1(100, 100);
 		Instances test1 = getSequence1(20, 100);
-		//Instances test2 = getSequenceUniform(20, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -347,10 +344,6 @@ public class TestHMMClassifiers {
 		if (printErrorRates)
 			System.out.println("Test Seq 1 error rate " + errorRate);
 		assertTrue(errorRate < 0.1);
-		
-		//eval.evaluateModel(hmm, test2);
-		//errorRate = eval.errorRate();
-		//assertTrue(errorRate < 0.01);
 	}
 	
 
@@ -360,7 +353,6 @@ public class TestHMMClassifiers {
 	{
 		Instances train = getSequence2(200, 30);
 		Instances test1 = getSequence2(50, 30);
-		//Instances test2 = getSequenceUniform(20, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -475,7 +467,6 @@ public class TestHMMClassifiers {
 			System.out.println("Test Seq 3_1 error rate " + errorRate);
 		// quite a high error rate as the models are similar
 		assertTrue("error rate " + errorRate, errorRate < 0.4);
-
 	}
 
 
@@ -565,16 +556,13 @@ public class TestHMMClassifiers {
 			System.out.println("Test Seq 3_1 error rate " + errorRate);
 		// quite a high error rate as the models are similar
 		assertTrue("error rate " + errorRate, errorRate < 0.4);
-
 	}
-
 	
 	@Test
 	public void TestMVSequence2_1() throws Exception
 	{
 		Instances train = getMVSequence2(200, 100);
 		Instances test1 = getMVSequence2(100, 100);
-		//Instances test2 = getSequenceUniform(20, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -607,7 +595,6 @@ public class TestHMMClassifiers {
 			{
 				outputMeans[c][s] = new DoubleVector(4, 10.0*(double)s);
 				outputVars[c][s] = Matrix.identity(4, 4);
-				//outputVars[c][s].timesEquals(4.0f);
 			}
 		}
 		
@@ -650,7 +637,6 @@ public class TestHMMClassifiers {
 			{
 				outputMeans[c][s] = new DoubleVector(4, 10.0*(double)s);
 				outputVars[c][s] = Matrix.identity(4, 4);
-				//outputVars[c][s].timesEquals(4.0f);
 			}
 		}
 		
@@ -768,7 +754,6 @@ public class TestHMMClassifiers {
 			{
 				outputMeans[c][s] = new DoubleVector(4, 10.0*(double)s);
 				outputVars[c][s] = Matrix.identity(4, 4);
-				//outputVars[c][s].timesEquals(4.0f);
 			}
 		}
 		
@@ -855,7 +840,6 @@ public class TestHMMClassifiers {
 			{
 				outputMeans[c][s] = new DoubleVector(4, 10.0*(double)s);
 				outputVars[c][s] = Matrix.identity(4, 4);
-				//outputVars[c][s].timesEquals(4.0f);
 			}
 		}
 		
@@ -934,7 +918,6 @@ public class TestHMMClassifiers {
 		hmm.setNumeric(true);
 		hmm.setOutputDimension(4);
 		
-		
 		DoubleVector outputMeans[][] = new DoubleVector[2][4];
 		Matrix outputVars[][] = new Matrix[2][4];
 		
@@ -947,7 +930,6 @@ public class TestHMMClassifiers {
 				outputVars[c][s].timesEquals(4.0f);
 			}
 		}
-		
 		
 		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);	
 
@@ -969,7 +951,6 @@ public class TestHMMClassifiers {
 		assertTrue(errorRate1 < 0.25);
 		assertTrue(errorRate2 < 0.25);
 	}
-
 
 	@Test
 	public void TestMVSequence3_2() throws Exception
@@ -1034,8 +1015,6 @@ public class TestHMMClassifiers {
 		assertTrue(errorRate1 < 0.25);
 		assertTrue(errorRate2 < 0.25);
 	}
-
-
 	
 	@Test
 	public void TestMVSequence3_3() throws Exception
@@ -1126,7 +1105,7 @@ public class TestHMMClassifiers {
 		Matrix m = Matrix.identity(4, 4);
 		for (int i = 0; i < 3; i++)
 		{
-			m.set(i,i, 2.0);
+			m.set(i, i, 2.0);
 			m.set(i, i+1, -1);
 			m.set(i+1, i, -1);
 		}

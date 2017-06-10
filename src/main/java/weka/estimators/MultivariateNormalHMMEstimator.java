@@ -169,8 +169,7 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 	}
 
 	@Override
-	public void addValue(double prevState, double state, DoubleVector output,
-			double weight) {
+	public void addValue(double prevState, double state, DoubleVector output, double weight) {
 		m_stateEstimators[(int)prevState].addValue(state, weight);
 		m_outputEstimators[(int)state].addValue(output, weight);
 	}
@@ -193,11 +192,8 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 
 	@Override
 	public double getProbability0(double state, DoubleVector output) throws Exception {
-		return m_state0Estimator.getProbability(state)
-		     * m_outputEstimators[(int)state].getProbability(output);
+		return m_state0Estimator.getProbability(state) * m_outputEstimators[(int)state].getProbability(output);
 	}
-
-
 	
 	@Override
 	public void addValue(double prevState, double state, double output,
@@ -247,13 +243,13 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 			throw new Exception("Trying to get the probability of a multivariate output with a single value");
 	}
 
-	public String  toString() {
-	    String s = "MultivariateNormalHMMEstimator\n" +  super.toString();
+	public String toString() {
+		String s = "MultivariateNormalHMMEstimator\n" + super.toString();
 	    
-	    for (int i = 0; i < m_outputEstimators.length; i++)
-	    	s = s + "Output Estimator, state " + i + "\n" +  m_outputEstimators[i].toString() + "\n";
+		for (int i = 0; i < m_outputEstimators.length; i++)
+			s = s + "Output Estimator, state " + i + "\n" +  m_outputEstimators[i].toString() + "\n";
 	    
-	    return s;
+		return s;
 	}
 
 	@Override

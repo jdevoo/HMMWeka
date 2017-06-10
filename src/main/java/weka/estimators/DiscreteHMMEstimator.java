@@ -44,7 +44,6 @@ public class DiscreteHMMEstimator extends AbstractHMMEstimator implements HMMEst
 	
 	public DiscreteHMMEstimator(int numStates, int numOutputs, boolean laplace) {
 		super(numStates, laplace);
-
 		setNumOutputs(numOutputs);
 	}
 
@@ -60,8 +59,7 @@ public class DiscreteHMMEstimator extends AbstractHMMEstimator implements HMMEst
 	}
 	
 	@Override
-	public void addValue(double prevState, double state, DoubleVector output,
-			double weight) {
+	public void addValue(double prevState, double state, DoubleVector output, double weight) {
 		addValue(prevState, state, output.get(0), weight);
 	}
 
@@ -79,8 +77,6 @@ public class DiscreteHMMEstimator extends AbstractHMMEstimator implements HMMEst
 	public double getProbability0(double state, DoubleVector output) {
 		return getProbability0(state, output.get(0));
 	}
-
-
 	
 	@Override
 	public void addValue(double prevState, double state, double output, double weight) {
@@ -96,14 +92,12 @@ public class DiscreteHMMEstimator extends AbstractHMMEstimator implements HMMEst
 
 	@Override
 	public double getProbability(double prevState, double state, double output) {
-		return m_stateEstimators[(int)prevState].getProbability(state)
-			* m_outputEstimators[(int)state].getProbability(output);
+		return m_stateEstimators[(int)prevState].getProbability(state) * m_outputEstimators[(int)state].getProbability(output);
 	}
 
 	@Override
 	public double getProbability0(double state, double output) {
-		return m_state0Estimator.getProbability(state)
-		* m_outputEstimators[(int)state].getProbability(output);
+		return m_state0Estimator.getProbability(state) * m_outputEstimators[(int)state].getProbability(output);
 	}
 
 	@Override
@@ -111,7 +105,6 @@ public class DiscreteHMMEstimator extends AbstractHMMEstimator implements HMMEst
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public int Sample0(Instances sequence, Random generator) {
@@ -150,12 +143,12 @@ public class DiscreteHMMEstimator extends AbstractHMMEstimator implements HMMEst
 	}
 
 	public String  toString() {
-	    String s = "DiscreteHMMEstimator\n" + super.toString();
+		String s = "DiscreteHMMEstimator\n" + super.toString();
 	    
-	    for (int i = 0; i < m_outputEstimators.length; i++)
-	    	s = s + "Output Estimator, state " + i + " " + m_outputEstimators[i].toString() + "\n";
+		for (int i = 0; i < m_outputEstimators.length; i++)
+			s = s + "Output Estimator, state " + i + " " + m_outputEstimators[i].toString() + "\n";
 	    
-	    return s;
+		return s;
 	}
 
 	@Override

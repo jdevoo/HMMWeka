@@ -37,7 +37,6 @@ public class MultivariateNormalEstimator implements Serializable {
 		this.m_CovarianceType = Type;
 	}
 
-
 	boolean m_Dirty = false;
 	
 	public MultivariateNormalEstimator()
@@ -47,7 +46,7 @@ public class MultivariateNormalEstimator implements Serializable {
 	
 	public MultivariateNormalEstimator(MultivariateNormalEstimator e) throws Exception
 	{
-		if(e.m_Dirty)
+		if (e.m_Dirty)
 			e.calculateParameters();
 		m_Mean = new SerializableDoubleVector(e.m_Mean.copy());
 		m_Var = e.m_Var.copy();
@@ -123,24 +122,23 @@ public class MultivariateNormalEstimator implements Serializable {
 	{
 		m_Dirty = false; 
 		if (m_SumOfWeights > 0.00001) {
-		      m_Mean = new SerializableDoubleVector(m_SumOfValues.times(1.0 / m_SumOfWeights));
+			m_Mean = new SerializableDoubleVector(m_SumOfValues.times(1.0 / m_SumOfWeights));
 		      
-		      switch(getCovarianceType())
-		      {
-		      case COVARIANCE_FULL:
-		    	  calculateVarianceFull();
-		    	  break;
-		      case COVARIANCE_DIAGONAL:
-		    	  calculateVarianceDiagonal();
-		    	  break;
-		      case COVARIANCE_SPHERICAL:
-		    	  calculateVarianceSpherical();
-		    	  break;
-		      default:
-		    	  throw new Exception("Unhandled covariance type");
-		      }
-		      
-		      calculateDerivedParameters();
+			switch(getCovarianceType())
+			{
+				case COVARIANCE_FULL:
+					calculateVarianceFull();
+					break;
+				case COVARIANCE_DIAGONAL:
+					calculateVarianceDiagonal();
+					break;
+				case COVARIANCE_SPHERICAL:
+					calculateVarianceSpherical();
+					break;
+				default:
+					throw new Exception("Unhandled covariance type");
+			}
+			calculateDerivedParameters();
 		}
 	}
 	
@@ -216,13 +214,13 @@ public class MultivariateNormalEstimator implements Serializable {
 				m_SumOfSquareValues.set(i,j, m_SumOfSquareValues.get(i,j) + data.get(i) * data.get(j) * weight);
 			}
 		m_Dirty = true;
-	  }
+	}
 	
-	  public double getProbability(DoubleVector data) throws Exception
-	  {
+	public double getProbability(DoubleVector data) throws Exception
+	{
 		if (m_Dirty)
 			calculateParameters();
-		  
+
 		if (m_DetVar < 1.0E-200)
 		{
 			return 0.0;
@@ -230,7 +228,7 @@ public class MultivariateNormalEstimator implements Serializable {
 		  
 		double coef = 1.0/Math.pow(2*Math.PI, m_Mean.size()/2.0);
 		coef = coef * 1.0/(Math.sqrt(m_DetVar));
-		  
+		 
 		double product = 0.0;
 		for (int i = 0; i < m_Mean.size(); i++)
 			for (int j = 0; j < m_Mean.size(); j++)
@@ -240,28 +238,28 @@ public class MultivariateNormalEstimator implements Serializable {
 		if (Double.isInfinite(p) || Double.isNaN(p))
 			throw new Exception("Calculated probability is NaN");
 		return p;
-	  }
+	}
 	  
-	  public DoubleVector boxMuller()
-	  {
+	public DoubleVector boxMuller()
+	{
 		DoubleVector v;
 		double r2 = 0.0;
 		do
 		{
-			v  = DoubleVector.random(2); 
+			v = DoubleVector.random(2); 
 			v.timesEquals(2.0);
 			v.minusEquals(1);
 			r2 = v.sum2();
 		} while (r2>1.0);
-		for(int i = 0; i < v.size(); i++)
+		for (int i = 0; i < v.size(); i++)
 		{
 			v.set(i, v.get(i)*Math.sqrt(-2*Math.log(r2)/r2));
 		}
 		return v;
-	  }
+	}
 	
-	  public DoubleVector sample()
-	  {
+	public DoubleVector sample()
+	{
 		//get a vector of samples between -1 and 10
 		DoubleVector v = new DoubleVector(m_Mean.size());
 		for (int i = 0; i < v.size()/2; i++)
@@ -278,12 +276,12 @@ public class MultivariateNormalEstimator implements Serializable {
 		DoubleVector result = new DoubleVector(m_Mean.size());
 		for (int i = 0; i < result.size(); i++)
 			for(int j = 0; j < result.size(); j++)
-				result.set(i, result.get(i)+m_CholeskyL.get(i, j)*v.get(j));// + m_Mean.get(i));
+				result.set(i, result.get(i)+m_CholeskyL.get(i, j)*v.get(j));
 		result.plusEquals(m_Mean);
 		return result;
-	  }
+	}
 	  
-	  public String  toString() {
+	public String toString() {
 		String covString = "";
 		switch (getCovarianceType())
 		{
@@ -300,6 +298,6 @@ public class MultivariateNormalEstimator implements Serializable {
 			default:
 				break;
 		}
-		return "Mean\n" + m_Mean.toString() + "\nCovariance\n" + covString;
+		return "Mean\n" + m_Mean + "\nCovariance\n" + covString;
 	}
 }

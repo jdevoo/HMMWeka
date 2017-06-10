@@ -63,14 +63,14 @@ public class AbstractHMMEstimator implements Serializable {
 		return 1;
 	}
 
-	public String  toString() {
-	    String s = "";
+	public String toString() {
+		String s = "";
 
-	    s = s + "Step 0 state estimator " + m_state0Estimator.toString() + "\n";
+		s = s + "Step 0 state estimator " + m_state0Estimator.toString() + "\n";
 	    
-	    for (int i = 0; i < m_stateEstimators.length; i++)
-	    	s = s + "State Estimator, previous state " + i + " " + m_stateEstimators[i].toString() + "\n";
+		for (int i = 0; i < m_stateEstimators.length; i++)
+			s = s + "State Estimator, previous state " + i + " " + m_stateEstimators[i].toString() + "\n";
 	    
-	    return s;
+		return s;
 	}
 }

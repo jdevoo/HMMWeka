@@ -7,7 +7,6 @@ import weka.core.matrix.Matrix;
 
 /**
  * @author marco gillies
- *
  */
 public class TestMultivariateNormalEstimator {
 	/**
@@ -22,7 +21,7 @@ public class TestMultivariateNormalEstimator {
 		mne.setCovarianceType(MultivariateNormalEstimator.COVARIANCE_DIAGONAL);
 		assertEquals(mne.getCovarianceType(), MultivariateNormalEstimator.COVARIANCE_DIAGONAL);
 		
-		for (int i = 0; i < 50.0; i++)
+		for (int i = 0; i < 50; i++)
 		{
 			DoubleVector v = DoubleVector.random(6);
 			mne.addValue(v, 1.0);
@@ -39,7 +38,7 @@ public class TestMultivariateNormalEstimator {
 		mne.setCovarianceType(MultivariateNormalEstimator.COVARIANCE_SPHERICAL);
 		assertEquals(mne.getCovarianceType(), MultivariateNormalEstimator.COVARIANCE_SPHERICAL);
 		
-		for (int i = 0; i < 50.0; i++)
+		for (int i = 0; i < 50; i++)
 		{
 			DoubleVector v = DoubleVector.random(6);
 			mne.addValue(v, 1.0);
@@ -49,7 +48,7 @@ public class TestMultivariateNormalEstimator {
 		for (int i = 0; i < 6; i ++)
 			for (int j = 0; j < 6; j++)
 			{
-				if (i!=j)
+				if (i != j)
 					assertEquals(cov.get(i,j), 0.0, 0.0001);
 				else
 					assertEquals(cov.get(i,j), cov.get(0,0), 0.0001);
@@ -95,11 +94,11 @@ public class TestMultivariateNormalEstimator {
 		Matrix cov = Matrix.identity(6, 6);
 		for (int i = 0; i < 5; i++)
 		{
-			cov.set(i,i, 2.0);
+			cov.set(i, i, 2.0);
 			cov.set(i, i+1, -1);
 			cov.set(i+1, i, -1);
 		}
-		cov.set(5,5, 2);
+		cov.set(5, 5, 2);
 		mne1.setVariance(cov);
 		
 		MultivariateNormalEstimator mne2 = new MultivariateNormalEstimator(mne1);
@@ -119,7 +118,7 @@ public class TestMultivariateNormalEstimator {
 		DoubleVector mean = DoubleVector.random(6);
 		mne.setMean(mean);
 		
-		assertVectorsEqual( mean, mne.getMean(), 0.001);
+		assertVectorsEqual(mean, mne.getMean(), 0.001);
 	}
 
 	/**
@@ -134,11 +133,11 @@ public class TestMultivariateNormalEstimator {
 		Matrix cov = Matrix.identity(6, 6);
 		for (int i = 0; i < 5; i++)
 		{
-			cov.set(i,i, 2.0);
+			cov.set(i, i, 2.0);
 			cov.set(i, i+1, -1);
 			cov.set(i+1, i, -1);
 		}
-		cov.set(5,5, 2);
+		cov.set(5, 5, 2);
 		mne.setVariance(cov);
 		
 		assertMatricesEqual(cov, mne.getVariance(), 0.001);
@@ -180,11 +179,11 @@ public class TestMultivariateNormalEstimator {
 		Matrix cov = Matrix.identity(6, 6);
 		for (int i = 0; i < 5; i++)
 		{
-			cov.set(i,i, 2.0);
+			cov.set(i, i, 2.0);
 			cov.set(i, i+1, -1);
 			cov.set(i+1, i, -1);
 		}
-		cov.set(5,5, 2);
+		cov.set(5, 5, 2);
 		mne.setVariance(cov);
 
 		double meanProb = mne.getProbability(mean);
@@ -211,11 +210,11 @@ public class TestMultivariateNormalEstimator {
 		Matrix cov = Matrix.identity(6, 6);
 		for (int i = 0; i < 5; i++)
 		{
-			cov.set(i,i, 2.0);
+			cov.set(i, i, 2.0);
 			cov.set(i, i+1, -1);
 			cov.set(i+1, i, -1);
 		}
-		cov.set(5,5, 2);
+		cov.set(5, 5, 2);
 		mne1.setVariance(cov);
 		
 		MultivariateNormalEstimator mne2 = new MultivariateNormalEstimator();
@@ -226,7 +225,9 @@ public class TestMultivariateNormalEstimator {
 		}
 		mne2.calculateParameters();
 
-		assertVectorsEqual( mne1.getMean(), mne2.getMean(), 0.1);
+		System.out.println("mean mne1 " + mne1.getMean());
+		System.out.println("mean mne2 " + mne2.getMean());
+		assertVectorsEqual(mne1.getMean(), mne2.getMean(), 0.1);
 		assertMatricesEqual(mne1.getVariance(), mne2.getVariance(), 0.1);
 	}
 

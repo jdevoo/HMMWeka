@@ -1069,9 +1069,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			for (int j = 0; j < sequence.numInstances(); j++)
 			{
 				flatdata[classNum].add(sequence.instance(j));
-
 			}
-			
 		}
 		
 		SimpleKMeans [] kmeans = new SimpleKMeans[numClasses];
@@ -1082,7 +1080,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			kmeans[i].setDisplayStdDevs(true);
 			kmeans[i].buildClusterer(flatdata[i]);
 			//System.out.print("Kmeans cluster " + i + " sizes ");
-			//int [] clusterSizes = kmeans[i].getClusterSizes();
+			//double [] clusterSizes = kmeans[i].getClusterSizes();
 			//for (int j = 0; j < clusterSizes.length; j++)
 			//	System.out.print(clusterSizes[j] + " ");
 			//System.out.println("");
@@ -1111,7 +1109,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 				if (outputVars == null)
 				{
 					int n = clusterStdDevs.instance(j).numAttributes();
-					Matrix sigma = new Matrix(n,n, 0.0);
+					Matrix sigma = new Matrix(n, n, 0.0);
 					for (int a = 0; a < n; a++)
 					{
 						double s = clusterStdDevs.instance(j).value(a);
@@ -1240,7 +1238,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			System.err.println("class attribute is not nominal");
 			return;
 		}
-		//System.out.println(data);
+		System.out.println(data);
 
 		// find the sequence attribute and then use it to 
 		// find the number of outputs

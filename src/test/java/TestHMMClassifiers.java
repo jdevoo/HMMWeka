@@ -324,7 +324,7 @@ public class TestHMMClassifiers {
 	public void TestSequence1() throws Exception
 	{
 		Instances train = getSequence1(100, 100);
-		Instances test1 = getSequence1(20, 100);
+		Instances test = getSequence1(20, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -336,14 +336,14 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test Seq 1 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+			System.out.println("Train Seq 1 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test Seq 1 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 	}
 	
 
@@ -352,7 +352,7 @@ public class TestHMMClassifiers {
 	public void TestSequence2_1() throws Exception
 	{
 		Instances train = getSequence2(200, 30);
-		Instances test1 = getSequence2(50, 30);
+		Instances test = getSequence2(50, 30);
 		
 		HMM hmm = new HMM();
 		
@@ -377,14 +377,14 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test Seq 2_1 error rate " + errorRate);
-		assertTrue(errorRate < 0.15);
+			System.out.println("Train Seq 2_1 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.15);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test Seq 2_1 error rate " + errorRate);
-		assertTrue(errorRate < 0.15);
+		assertTrue("error rate " + errorRate, errorRate < 0.15);
 	}
 	
 
@@ -392,7 +392,7 @@ public class TestHMMClassifiers {
 	public void TestSequence2_2() throws Exception
 	{
 		Instances train = getSequence2(100, 100);
-		Instances test1 = getSequence2(50, 100);
+		Instances test = getSequence2(50, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -405,21 +405,21 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test Seq 2_2 error rate " + errorRate);
-		assertTrue(errorRate < 0.25);
+			System.out.println("Train Seq 2_2 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test Seq 2_2 error rate " + errorRate);
-		assertTrue(errorRate < 0.25);
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 	}
 	
 	@Test
 	public void TestSequence3_1() throws Exception
 	{
 		Instances train = getSequence3(100, 100);
-		Instances test1 = getSequence3(50, 100);
+		Instances test = getSequence3(50, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -443,8 +443,8 @@ public class TestHMMClassifiers {
 		{
 			for (int s=0; s < 5; s++)
 			{
-				stateProbs[c][s][s]=0.5;
-				stateProbs[c][s][s+1]=0.5;
+				stateProbs[c][s][s] = 0.5;
+				stateProbs[c][s][s+1] = 0.5;
 			}
 			stateProbs[c][5][5] = 1.0;
 		}
@@ -457,11 +457,11 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test Seq 3_1 error rate " + errorRate);
+			System.out.println("Train Seq 3_1 error rate " + errorRate);
 		// quite a high error rate as the models are similar
 		assertTrue("error rate " + errorRate, errorRate < 0.4);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test Seq 3_1 error rate " + errorRate);
@@ -474,7 +474,7 @@ public class TestHMMClassifiers {
 	public void TestSequence3_2() throws Exception
 	{
 		Instances train = getSequence3(100, 100);
-		Instances test1 = getSequence3(50, 100);
+		Instances test = getSequence3(50, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -487,11 +487,11 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test Seq 3_2 error rate " + errorRate);
+			System.out.println("Train Seq 3_2 error rate " + errorRate);
 		// quite a high error rate as the models are similar
 		assertTrue("error rate " + errorRate, errorRate < 0.25);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test Seq 3_2 error rate " + errorRate);
@@ -500,10 +500,40 @@ public class TestHMMClassifiers {
 	}
 	
 	@Test
+	public void TestSequence3_4() throws Exception
+	{
+		Instances train = getSequence3(100, 100);
+		Instances test = getSequence3(50, 100);
+		
+		HMM hmm = new HMM();
+		
+		hmm.setNumStates(6);
+		hmm.setNumOutputs(6);
+		hmm.setLeftRight(true);
+		
+		hmm.buildClassifier(train);
+		Evaluation eval = new Evaluation(train);
+		
+		eval.evaluateModel(hmm, train);
+		double errorRate = eval.errorRate();
+		if (printErrorRates)
+			System.out.println("Train Seq 3_4 error rate " + errorRate);
+		// quite a high error rate as the models are similar
+		assertTrue("error rate " + errorRate, errorRate < 0.4);
+		
+		eval.evaluateModel(hmm, test);
+		errorRate = eval.errorRate();
+		if (printErrorRates)
+			System.out.println("Test Seq 3_4 error rate " + errorRate);
+		// quite a high error rate as the models are similar
+		assertTrue("error rate " + errorRate, errorRate < 0.4);
+	}
+	
+	@Test
 	public void TestMVSequence1() throws Exception
 	{
 		Instances train = getMVSequence1(100, 100);
-		Instances test1 = getMVSequence1(20, 100);
+		Instances test = getMVSequence1(20, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -518,51 +548,21 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 1 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+			System.out.println("Train MV Seq 1 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 1 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
-	}
-	
-	@Test
-	public void TestSequence3_4() throws Exception
-	{
-		Instances train = getSequence3(100, 100);
-		Instances test1 = getSequence3(50, 100);
-		
-		HMM hmm = new HMM();
-		
-		hmm.setNumStates(6);
-		hmm.setNumOutputs(6);
-		hmm.setLeftRight(true);
-		
-		hmm.buildClassifier(train);
-		Evaluation eval = new Evaluation(train);
-		
-		eval.evaluateModel(hmm, train);
-		double errorRate = eval.errorRate();
-		if (printErrorRates)
-			System.out.println("Test Seq 3_1 error rate " + errorRate);
-		// quite a high error rate as the models are similar
-		assertTrue("error rate " + errorRate, errorRate < 0.4);
-		
-		eval.evaluateModel(hmm, test1);
-		errorRate = eval.errorRate();
-		if (printErrorRates)
-			System.out.println("Test Seq 3_1 error rate " + errorRate);
-		// quite a high error rate as the models are similar
-		assertTrue("error rate " + errorRate, errorRate < 0.4);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 	}
 	
 	@Test
 	public void TestMVSequence2_1() throws Exception
 	{
 		Instances train = getMVSequence2(200, 100);
-		Instances test1 = getMVSequence2(100, 100);
+		Instances test = getMVSequence2(100, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -598,7 +598,7 @@ public class TestHMMClassifiers {
 			}
 		}
 		
-		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, outputMeans, outputVars, null);	
+		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, outputMeans, outputVars, null);
 
 		hmm.buildClassifier(train);
 		Evaluation eval = new Evaluation(train);
@@ -606,21 +606,21 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 2_1 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+			System.out.println("Train MV Seq 2_1 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 2_1 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 	}
 	
 	@Test
 	public void TestMVSequence2_2() throws Exception
 	{
 		Instances train = getMVSequence2(200, 100);
-		Instances test1 = getMVSequence2(100, 100);
+		Instances test = getMVSequence2(100, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -640,7 +640,7 @@ public class TestHMMClassifiers {
 			}
 		}
 		
-		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);	
+		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);
 		
 		hmm.buildClassifier(train);
 		Evaluation eval = new Evaluation(train);
@@ -648,27 +648,26 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 2_2 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+			System.out.println("Train MV Seq 2_2 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 2_2 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 	}
 	
 	@Test
 	public void TestMVSequence2_3() throws Exception
 	{
 		Instances train = getMVSequence2(200, 100);
-		Instances test1 = getMVSequence2(100, 100);
+		Instances test = getMVSequence2(100, 100);
 		
 		HMM hmm = new HMM();
 		
 		hmm.setNumStates(2);
 		hmm.setNumeric(true);
-		hmm.setOutputDimension(4);
 		
 		double state0Probs[][] = new double[2][2];
 		state0Probs[0][0] = 1;
@@ -686,18 +685,18 @@ public class TestHMMClassifiers {
 		stateProbs[1][1][0] = 0.1;
 		stateProbs[1][1][1] = 0.9;
 		
-		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, null, null, train);	
-
+		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, null, null, train);
+		
 		hmm.buildClassifier(train);
 		Evaluation eval = new Evaluation(train);
 		
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 2_3 error rate " + errorRate);
+			System.out.println("Train MV Seq 2_3 error rate " + errorRate);
 		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 2_3 error rate " + errorRate);
@@ -708,7 +707,7 @@ public class TestHMMClassifiers {
 	public void TestMVSequence2_4() throws Exception
 	{
 		Instances train = getMVSequence2(100, 100);
-		Instances test1 = getMVSequence2(50, 100);
+		Instances test = getMVSequence2(50, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -722,21 +721,21 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 2_4 error rate " + errorRate);
-		assertTrue(errorRate < 0.2);
+			System.out.println("Train MV Seq 2_4 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.2);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 2_4 error rate " + errorRate);
-		assertTrue(errorRate < 0.25);
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 	}
 	
 	@Test
 	public void TestMVSequence2_5() throws Exception
 	{
 		Instances train = getMVSequence2(200, 100);
-		Instances test1 = getMVSequence2(100, 100);
+		Instances test = getMVSequence2(100, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -757,7 +756,7 @@ public class TestHMMClassifiers {
 			}
 		}
 		
-		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);	
+		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);
 		
 		hmm.buildClassifier(train);
 		Evaluation eval = new Evaluation(train);
@@ -765,21 +764,21 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 2_5 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+			System.out.println("Train MV Seq 2_5 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 2_5 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 	}
 
 	@Test
 	public void TestMVSequence2_6() throws Exception
 	{
 		Instances train = getMVSequence2(200, 100);
-		Instances test1 = getMVSequence2(100, 100);
+		Instances test = getMVSequence2(100, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -800,7 +799,7 @@ public class TestHMMClassifiers {
 			}
 		}
 		
-		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);	
+		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);
 		
 		hmm.buildClassifier(train);
 		Evaluation eval = new Evaluation(train);
@@ -808,21 +807,21 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 2_6 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+			System.out.println("Train MV Seq 2_6 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 2_6 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 	}
 
 	@Test
 	public void TestMVSequence2_7() throws Exception
 	{
 		Instances train = getMVSequence2(200, 100);
-		Instances test1 = getMVSequence2(100, 100);
+		Instances test = getMVSequence2(100, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -843,7 +842,7 @@ public class TestHMMClassifiers {
 			}
 		}
 		
-		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);	
+		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);
 		
 		hmm.buildClassifier(train);
 		Evaluation eval = new Evaluation(train);
@@ -851,21 +850,21 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 2_7 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+			System.out.println("Train MV Seq 2_7 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 2_7 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 	}
 
 	@Test
 	public void TestMVSequence2_8() throws Exception
 	{
 		Instances train = getMVSequence2(200, 100);
-		Instances test1 = getMVSequence2(100, 100);
+		Instances test = getMVSequence2(100, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -887,7 +886,7 @@ public class TestHMMClassifiers {
 			}
 		}
 		
-		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);	
+		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);
 		
 		hmm.buildClassifier(train);
 		Evaluation eval = new Evaluation(train);
@@ -895,14 +894,14 @@ public class TestHMMClassifiers {
 		eval.evaluateModel(hmm, train);
 		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 2_8 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+			System.out.println("Train MV Seq 2_8 error rate " + errorRate);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 		
-		eval.evaluateModel(hmm, test1);
+		eval.evaluateModel(hmm, test);
 		errorRate = eval.errorRate();
 		if (printErrorRates)
 			System.out.println("Test MV Seq 2_8 error rate " + errorRate);
-		assertTrue(errorRate < 0.1);
+		assertTrue("error rate " + errorRate, errorRate < 0.1);
 	}
 
 	
@@ -910,7 +909,7 @@ public class TestHMMClassifiers {
 	public void TestMVSequence3_1() throws Exception
 	{
 		Instances train = getMVSequence3(100, 100);
-		Instances test1 = getMVSequence3(50, 100);
+		Instances test = getMVSequence3(50, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -931,32 +930,32 @@ public class TestHMMClassifiers {
 			}
 		}
 		
-		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);	
+		hmm.initEstimatorsMultivariateNormal(2, null, null, outputMeans, outputVars, null);
 
 		hmm.buildClassifier(train);
 
 		Evaluation eval = new Evaluation(train);
 		
 		eval.evaluateModel(hmm, train);
-		double errorRate1 = eval.errorRate();
+		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 3_1 error rate " + errorRate1);
+			System.out.println("Train MV Seq 3_1 error rate " + errorRate);
 		// quite a high error rate as the models are similar
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 		
-		eval.evaluateModel(hmm, test1);
-		double errorRate2 = eval.errorRate();
+		eval.evaluateModel(hmm, test);
+		errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 3_1 error rate " + errorRate2);
+			System.out.println("Test MV Seq 3_1 error rate " + errorRate);
 		// quite a high error rate as the models are similar
-		assertTrue(errorRate1 < 0.25);
-		assertTrue(errorRate2 < 0.25);
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 	}
 
 	@Test
 	public void TestMVSequence3_2() throws Exception
 	{
 		Instances train = getMVSequence3(100, 100);
-		Instances test1 = getMVSequence3(50, 100);
+		Instances test = getMVSequence3(50, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -995,32 +994,32 @@ public class TestHMMClassifiers {
 			}
 		}
 		
-		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, null, null, null);	
+		hmm.initEstimatorsMultivariateNormal(2, state0Probs, stateProbs, null, null, null);
 
 		hmm.buildClassifier(train);
 
 		Evaluation eval = new Evaluation(train);
 		
 		eval.evaluateModel(hmm, train);
-		double errorRate1 = eval.errorRate();
+		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 3_2 error rate " + errorRate1);
+			System.out.println("Train MV Seq 3_2 error rate " + errorRate);
 		// quite a high error rate as the models are similar
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 		
-		eval.evaluateModel(hmm, test1);
-		double errorRate2 = eval.errorRate();
+		eval.evaluateModel(hmm, test);
+		errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 3_2 error rate " + errorRate2);
+			System.out.println("Test MV Seq 3_2 error rate " + errorRate);
 		// quite a high error rate as the models are similar
-		assertTrue(errorRate1 < 0.25);
-		assertTrue(errorRate2 < 0.25);
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 	}
 	
 	@Test
 	public void TestMVSequence3_3() throws Exception
 	{
 		Instances train = getMVSequence3(100, 100);
-		Instances test1 = getMVSequence3(50, 100);
+		Instances test = getMVSequence3(50, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -1032,18 +1031,18 @@ public class TestHMMClassifiers {
 		Evaluation eval = new Evaluation(train);
 		
 		eval.evaluateModel(hmm, train);
-		double errorRate1 = eval.errorRate();
+		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 3_3 error rate " + errorRate1);
+			System.out.println("Train MV Seq 3_3 error rate " + errorRate);
 		// quite a high error rate as the models are similar
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 		
-		eval.evaluateModel(hmm, test1);
-		double errorRate2 = eval.errorRate();
+		eval.evaluateModel(hmm, test);
+		errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 3_3 error rate " + errorRate2);
+			System.out.println("Test MV Seq 3_3 error rate " + errorRate);
 		// quite a high error rate as the models are similar
-		assertTrue(errorRate1 < 0.25);
-		assertTrue(errorRate2 < 0.25);
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 	}
 	
 
@@ -1051,7 +1050,7 @@ public class TestHMMClassifiers {
 	public void TestMVSequence3_4() throws Exception
 	{
 		Instances train = getMVSequence3(100, 100);
-		Instances test1 = getMVSequence3(50, 100);
+		Instances test = getMVSequence3(50, 100);
 		
 		HMM hmm = new HMM();
 		
@@ -1064,18 +1063,18 @@ public class TestHMMClassifiers {
 		Evaluation eval = new Evaluation(train);
 		
 		eval.evaluateModel(hmm, train);
-		double errorRate1 = eval.errorRate();
+		double errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 3_3 error rate " + errorRate1);
+			System.out.println("Train MV Seq 3_4 error rate " + errorRate);
 		// quite a high error rate as the models are similar
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 		
-		eval.evaluateModel(hmm, test1);
-		double errorRate2 = eval.errorRate();
+		eval.evaluateModel(hmm, test);
+		errorRate = eval.errorRate();
 		if (printErrorRates)
-			System.out.println("Test MV Seq 3_3 error rate " + errorRate2);
+			System.out.println("Test MV Seq 3_4 error rate " + errorRate);
 		// quite a high error rate as the models are similar
-		assertTrue(errorRate1 < 0.25);
-		assertTrue(errorRate2 < 0.25);
+		assertTrue("error rate " + errorRate, errorRate < 0.25);
 	}
 
 	
@@ -1092,10 +1091,10 @@ public class TestHMMClassifiers {
 		{
 			train1[i] = model1.sample();
 		}
-		DoubleVector test1 [] = new DoubleVector[1000];
+		DoubleVector test [] = new DoubleVector[1000];
 		for (int i = 0; i < train1.length; i++)
 		{
-			test1[i] = model1.sample();
+			test[i] = model1.sample();
 		}
 
 		// model2 has different means and covariances
@@ -1137,10 +1136,10 @@ public class TestHMMClassifiers {
 		
 		double lik1 = 0.0;
 		double lik2 = 0.0;
-		for (int i = 0; i < test1.length; i++)
+		for (int i = 0; i < test.length; i++)
 		{
-			lik1 += Math.log(est1.getProbability(test1[i]));
-			lik2 += Math.log(est2.getProbability(test1[i]));
+			lik1 += Math.log(est1.getProbability(test[i]));
+			lik2 += Math.log(est2.getProbability(test[i]));
 		}
 		assertTrue(lik1 > lik2);
 		

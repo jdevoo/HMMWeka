@@ -4,7 +4,7 @@
 PackageName=HMM
 
 # Version (required)
-Version=0.1.1
+Version=0.1.2
 
 #Date (year-month-day)
 Date=2015-05-23
@@ -19,7 +19,7 @@ Category=Classification, Multiinstance, Sequence
 Author=Marco Gillies <m.gillies@gold.ac.uk>
 
 # Maintainer (required)
-Maintainer=Marco Gillies <m.gillies@gold.ac.uk>
+Maintainer=JP de Vooght <jp@vooght.de>
 
 # License (required)
 License=Mozilla

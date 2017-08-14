@@ -1108,7 +1108,7 @@ public class TestHMMClassifiers {
 			m.set(i, i+1, -1);
 			m.set(i+1, i, -1);
 		}
-		m.set(3,3, 2);
+		m.set(3, 3, 2);
 		model2.setVariance(m);
 		
 		

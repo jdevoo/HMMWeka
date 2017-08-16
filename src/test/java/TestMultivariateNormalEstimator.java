@@ -102,8 +102,8 @@ public class TestMultivariateNormalEstimator {
 		mne1.setVariance(cov);
 		
 		MultivariateNormalEstimator mne2 = new MultivariateNormalEstimator(mne1);
-		assertVectorsEqual( mne1.getMean(), mne2.getMean(), 0.001);
-		assertVectorsEqual( mean, mne2.getMean(), 0.001);
+		assertVectorsEqual(mne1.getMean(), mne2.getMean(), 0.001);
+		assertVectorsEqual(mean, mne2.getMean(), 0.001);
 		
 		assertMatricesEqual(mne1.getVariance(), mne2.getVariance(), 0.001);
 		assertMatricesEqual(cov, mne2.getVariance(), 0.001);
@@ -218,7 +218,7 @@ public class TestMultivariateNormalEstimator {
 		mne1.setVariance(cov);
 		
 		MultivariateNormalEstimator mne2 = new MultivariateNormalEstimator();
-		for (int i = 0; i < 2000; i ++)
+		for (int i = 0; i < 2000; i++)
 		{
 			DoubleVector v = mne1.sample();
 			mne2.addValue(v, 1.0);

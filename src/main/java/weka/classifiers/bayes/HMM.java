@@ -938,7 +938,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			for (int i = 0; i < numClasses; i++)
 				for (int j = 0; j < getNumStates(); j++)
 				{
-					outputVars[i][j] = Matrix.identity(getOutputDimension(),getOutputDimension());	
+					outputVars[i][j] = Matrix.identity(getOutputDimension(), getOutputDimension());	
 					outputVars[i][j].timesEquals(10.0);
 				}
 		}

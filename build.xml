@@ -73,8 +73,8 @@
            debug="${debug}"
 	   deprecation="${deprecation}"
 	   includeantruntime="false"
-           source="1.8" target="1.8">
-
+	   source="1.7" target="1.7">
+      <compilerarg value="-Xlint:-options"/>
       <classpath refid="project.class.path" /> 
     </javac>
     <copy todir="${build}/classes" >
@@ -135,7 +135,8 @@
             debug="${debug}"
             deprecation="${deprecation}"
 	    includeantruntime="false"
-            source="1.8" target="1.8">
+            source="1.7" target="1.7">
+       <compilerarg value="-Xlint:-options"/>
        <classpath refid="project.class.path" /> 
      </javac>
      <copy todir="${build}/testcases" >

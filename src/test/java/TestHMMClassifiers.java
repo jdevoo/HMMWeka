@@ -541,6 +541,11 @@ public class TestHMMClassifiers {
 		Instances train = getMVSequence1(100, 100);
 		Instances test = getMVSequence1(20, 100);
 		
+		//ArffSaver saver = new ArffSaver();
+		//saver.setInstances(train);
+		//saver.setFile(new File("TestMVSequence1.arff"));
+		//saver.writeBatch();
+		
 		HMM hmm = new HMM();
 		
 		hmm.setNumStates(2);

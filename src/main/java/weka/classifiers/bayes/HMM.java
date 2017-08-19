@@ -24,6 +24,8 @@ import weka.estimators.MultivariateNormalHMMEstimator;
  */
 public class HMM extends weka.classifiers.RandomizableClassifier implements weka.core.OptionHandler, weka.core.MultiInstanceCapabilitiesHandler {
 	
+	private static final long serialVersionUID = 1959669739718119361L;
+
 	protected class ProbabilityTooSmallException extends Exception
 	{
 		private static final long serialVersionUID = -2706223192260478060L;
@@ -132,7 +134,6 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	public SelectedTag getCovarianceType() {
 		return new SelectedTag(m_CovarianceType, TAGS_COVARIANCE_TYPE);
 	}
-
 
 	/**
 	 * set the type of covariance matrices for gaussian HMMs.
@@ -282,8 +283,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	 * @param output the output value
 	 * @param prob the probability value to set it to
 	 */
-	public void setProbability0(int classId, double state, DoubleVector output,
-			double prob) {
+	public void setProbability0(int classId, double state, DoubleVector output, double prob) {
 		estimators[classId].addValue0(state, output, prob);
 	}
 
@@ -322,7 +322,6 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			output.set(i, sequence.instance(0).value(i));
 		for (int s = 0; s < m_NumStates; s++)
 		{
-			
 			alpha[0][s] = hmm.getProbability0(s, output);
 			scales[0] += alpha[0][s];
 		}
@@ -380,7 +379,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	protected double forward(HMMEstimator hmm, Instances sequence) throws Exception
 	{
 		double alpha[][] = new double[sequence.numInstances()][m_NumStates];
-		double scales[] =  forward(hmm, sequence, alpha);
+		double scales[] = forward(hmm, sequence, alpha);
 		return likelihoodFromScales(scales);
 	}
 	
@@ -425,7 +424,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 			}
 			else
 			{
-				throw new ProbabilityTooSmallException("time step " + (t+1) + " probabilit " + scales[t+1]);
+				throw new ProbabilityTooSmallException("time step " + (t+1) + " probability " + scales[t+1]);
 			}
 		}
 		
@@ -565,7 +564,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 				options[current++] = "-C SPHERICAL";
 				break;
 		}
-		options[current++] = "-D"  + isTied();
+		options[current++] = "-D" + isTied();
 		options[current++] = "-L" + isLeftRight();
 		options[current++] = "-R" + isRandomStateInitializers();
 	
@@ -645,8 +644,6 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	    
 		Utils.checkForRemainingOptions(options);
 	}
-
-	private static final long serialVersionUID = 1959669739718119361L;
 
 	/**
 	   * Returns default capabilities of the classifier.
@@ -971,7 +968,7 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 				{
 					m_SeqAttr = attr.index();
 					assert(m_SeqAttr == i);
-					//m_NumOutputs  = attr.relation().numDistinctValues(0);
+					m_NumOutputs = attr.relation().attribute(0).numValues();
 				}
 				if (attr.relation().attribute(0).isNumeric())
 				{
@@ -1158,13 +1155,13 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 		
 		for (int i = 0; i < numClasses; i++)
 		{
-			estimators[i]=new DiscreteHMMEstimator(getNumStates(), getNumOutputs(), false);
+			estimators[i] = new DiscreteHMMEstimator(getNumStates(), getNumOutputs(), false);
 			for (int s = 0; s < getNumStates(); s++)
 				for (int o = 0; o < getNumOutputs(); o++)
 				{
 					estimators[i].addValue0(s, o, 100.0*state0Probs[i][s]*outputProbs[i][s][o]);
 					for (int ps = 0; ps < getNumStates(); ps++)
-						estimators[i].addValue(ps,s, o, 100.0*stateProbs[i][ps][s]*outputProbs[i][s][o]);
+						estimators[i].addValue(ps, s, o, 100.0*stateProbs[i][ps][s]*outputProbs[i][s][o]);
 				}
 		}
 	}
@@ -1382,6 +1379,20 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 		return seqs;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuffer text = new StringBuffer();
+		text.append("Number of States: "+m_NumStates);
+		if (m_NumOutputs > 0)
+			text.append("\nNumber of Outputs: "+m_NumOutputs);
+		else
+			text.append("\nNumber of Output Dimensions: "+m_OutputDimension);
+		text.append("\n");
+		for (int i = 0; i < estimators.length; i++)
+			text.append("\nClass " + i + " " + estimators[i]);
+		return text.toString();
+	}
+
 	public static void main(String [] argv) {
 		runClassifier(new HMM(), argv);
 	}

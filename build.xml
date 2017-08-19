@@ -71,8 +71,9 @@
            destdir="${build}/classes"
            optimize="${optimization}"
            debug="${debug}"
-           deprecation="${deprecation}"
-           source="1.6" target="1.6">
+	   deprecation="${deprecation}"
+	   includeantruntime="false"
+           source="1.8" target="1.8">
 
       <classpath refid="project.class.path" /> 
     </javac>
@@ -103,8 +104,9 @@
              classpathref="project.class.path"
              destdir="${doc}" 
              Author="yes" 
-             Public="yes"
-             link="https://github.com/jdevoo/HMMWeka"
+	     Public="yes"
+	     link="http://docs.oracle.com/javase/8/docs/api/"
+	     additionalparam="-Xdoclint:none"
              maxmemory="256m"/>          
   </target> 
 
@@ -132,7 +134,8 @@
             optimize="${optimization}"
             debug="${debug}"
             deprecation="${deprecation}"
-            source="1.6" target="1.6">
+	    includeantruntime="false"
+            source="1.8" target="1.8">
        <classpath refid="project.class.path" /> 
      </javac>
      <copy todir="${build}/testcases" >

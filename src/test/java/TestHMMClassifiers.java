@@ -1,6 +1,7 @@
 package weka.classifiers.bayes;
 
 import java.util.Random;
+import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -12,6 +13,7 @@ import weka.core.Instances;
 import weka.core.SelectedTag;
 import weka.core.matrix.DoubleVector;
 import weka.core.matrix.Matrix;
+import weka.core.converters.ArffSaver;
 import weka.estimators.MultivariateNormalEstimator;
 
 public class TestHMMClassifiers {
@@ -325,6 +327,11 @@ public class TestHMMClassifiers {
 		Instances train = getSequence1(100, 100);
 		Instances test = getSequence1(20, 100);
 		
+		//ArffSaver saver = new ArffSaver();
+		//saver.setInstances(train);
+		//saver.setFile(new File("TestSequence1.arff"));
+		//saver.writeBatch();
+
 		HMM hmm = new HMM();
 		
 		hmm.setNumStates(2);
@@ -662,6 +669,11 @@ public class TestHMMClassifiers {
 	{
 		Instances train = getMVSequence2(200, 100);
 		Instances test = getMVSequence2(100, 100);
+
+		//ArffSaver saver = new ArffSaver();
+		//saver.setInstances(train);
+		//saver.setFile(new File("TestMVSequence2_3.arff"));
+		//saver.writeBatch();
 		
 		HMM hmm = new HMM();
 		

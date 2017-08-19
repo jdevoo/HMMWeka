@@ -57,7 +57,6 @@ public class AbstractHMMEstimator implements Serializable {
 		throw new Exception("Cannot set the number of output in non-nominal HMM Estimator");
 	}
 
-
 	public int getOutputDimension() {
 		// TODO Auto-generated method stub
 		return 1;
@@ -66,10 +65,10 @@ public class AbstractHMMEstimator implements Serializable {
 	public String toString() {
 		String s = "";
 
-		s = s + "Step 0 state estimator " + m_state0Estimator.toString() + "\n";
+		s = s + "Step 0 state estimator " + m_state0Estimator.toString();
 	    
 		for (int i = 0; i < m_stateEstimators.length; i++)
-			s = s + "State Estimator, previous state " + i + " " + m_stateEstimators[i].toString() + "\n";
+			s = s + "State Estimator, previous state " + i + " " + m_stateEstimators[i].toString();
 	    
 		return s;
 	}

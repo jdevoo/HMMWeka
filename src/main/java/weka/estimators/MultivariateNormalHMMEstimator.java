@@ -247,7 +247,7 @@ public class MultivariateNormalHMMEstimator extends AbstractHMMEstimator
 		String s = "MultivariateNormalHMMEstimator\n" + super.toString();
 	    
 		for (int i = 0; i < m_outputEstimators.length; i++)
-			s = s + "Output Estimator, state " + i + "\n" +  m_outputEstimators[i].toString() + "\n";
+			s = s + "Output Estimator, state " + i + "\n" +  m_outputEstimators[i].toString();
 	    
 		return s;
 	}

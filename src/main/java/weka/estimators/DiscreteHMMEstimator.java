@@ -142,11 +142,11 @@ public class DiscreteHMMEstimator extends AbstractHMMEstimator implements HMMEst
 		return state;
 	}
 
-	public String  toString() {
+	public String toString() {
 		String s = "DiscreteHMMEstimator\n" + super.toString();
 	    
 		for (int i = 0; i < m_outputEstimators.length; i++)
-			s = s + "Output Estimator, state " + i + " " + m_outputEstimators[i].toString() + "\n";
+			s = s + "Output Estimator, state " + i + " " + m_outputEstimators[i].toString();
 	    
 		return s;
 	}

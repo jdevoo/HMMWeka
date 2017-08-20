@@ -182,7 +182,7 @@ public class TestHMMClassifiers {
 
 		return hmm.sample(numseqs, length);
 	}
-	
+
 	protected Instances getMVSequence1(int numseqs, int length) throws Exception
 	{
 		HMM hmm = new HMM();
@@ -534,7 +534,7 @@ public class TestHMMClassifiers {
 		// quite a high error rate as the models are similar
 		assertTrue("error rate " + errorRate, errorRate < 0.4);
 	}
-	
+
 	@Test
 	public void TestMVSequence1() throws Exception
 	{

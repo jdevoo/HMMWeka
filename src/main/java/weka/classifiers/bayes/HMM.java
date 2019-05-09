@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.lang.Math;
 import java.util.Random;
+import java.util.Collections;
 
 import weka.classifiers.*;
 import weka.classifiers.RandomizableClassifier;
@@ -545,38 +546,39 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	
 	@Override
 	public String[] getOptions() {
-		String [] options = new String [10];
-		int current = 0;
+    Vector<String> options = new Vector<String>();
 
-		options[current++] = "-S " + getNumStates();
+		options.add("-S");
+    options.add("" + getNumStates());
 	    
-		options[current++] = "-I " + getIterationCutoff();
+		options.add("-I");
+    options.add("" + getIterationCutoff());
 	    
+		options.add("-C");
 		switch (m_CovarianceType)
 		{
 			case MultivariateNormalEstimator.COVARIANCE_FULL:
-				options[current++] = "-C FULL";
+				options.add("FULL");
 				break;
 			case MultivariateNormalEstimator.COVARIANCE_DIAGONAL:
-				options[current++] = "-C DIAGONAL";
+				options.add("DIAGONAL");
 				break;
 			case MultivariateNormalEstimator.COVARIANCE_SPHERICAL:
-				options[current++] = "-C SPHERICAL";
+				options.add("SPHERICAL");
 				break;
 		}
-		options[current++] = "-D" + isTied();
-		options[current++] = "-L" + isLeftRight();
-		options[current++] = "-R" + isRandomStateInitializers();
+		if (isTied()) options.add("-D");
+		if (isLeftRight()) options.add("-L");
+		if (isRandomStateInitializers()) options.add("-R");
+
+    Collections.addAll(options, super.getOptions());
 	
-		while (current < options.length) {
-			options[current++] = "";
-		}
-		return options;
+		return options.toArray(new String[0]);
 	}
 
 	@Override
 	public Enumeration<Option> listOptions() {
-		Vector<Option> newVector = new Vector<Option>(4);
+		Vector<Option> newVector = new Vector<Option>(6);
 		
 		newVector.addElement(
 			new Option("\tStates: number of HMM states to use\n",
@@ -596,24 +598,23 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 		newVector.addElement(
 			new Option("\tTied Covariance: whether the covariances of gaussian\n"
 				+"\toutputs are tied to be the same across all outputs ",
-				"D", 1,"-D"));
+				"D", 0,"-D"));
 
 		newVector.addElement(
 			new Option("\tLeft Right: whether the state transitions are constrained\n"
 				+"\tto go only to the next state in numerical order ",
-				"L", 1,"-L"));
+				"L", 0,"-L"));
 
 		newVector.addElement(
 			new Option("\tRandom Initialisation: whether the state transition probabilities are intialized randomly\n"
 				+"\t(if this is false they are initialised by performing a k-means clustering on the data) ",
-				"R", 1,"-R"));
+				"R", 0,"-R"));
 	    
 		return newVector.elements();
 	}
 	
 	@Override
 	public void setOptions(String[] options) throws Exception {
-		
 		String cutoffString = Utils.getOption('I', options);
 		if (cutoffString.length() != 0) 
 			setIterationCutoff(Double.parseDouble(cutoffString));
@@ -641,6 +642,8 @@ public class HMM extends weka.classifiers.RandomizableClassifier implements weka
 	    
 		if (Utils.getFlag('R', options))
 			setRandomStateInitializers(true);
+
+    super.setOptions(options);
 	    
 		Utils.checkForRemainingOptions(options);
 	}
